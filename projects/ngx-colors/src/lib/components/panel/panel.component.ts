@@ -121,6 +121,7 @@ export class PanelComponent implements OnInit {
 
   public menu = 1;
 
+  public showEyeDropper: boolean = false;
   public hideColorPicker: boolean = false;
   public hideTextInput: boolean = false;
   public acceptLabel: string;
@@ -187,6 +188,8 @@ export class PanelComponent implements OnInit {
     colorPickerControls: "default" | "only-alpha" | "no-alpha",
     position: "top" | "bottom"
   ) {
+    // @ts-ignore
+    this.showEyeDropper = !!window.EyeDropper;
     this.colorPickerControls = colorPickerControls;
     this.triggerInstance = triggerInstance;
     this.TriggerBBox = triggerElementRef;
@@ -334,6 +337,21 @@ export class PanelComponent implements OnInit {
     this.hsva = this.service.stringToHsva(color);
     this.triggerInstance.setColor(this.color);
     // this.triggerInstance.onChange();
+  }
+
+  public openEyeDropper(): void {
+    // @ts-ignore
+    if (!window.EyeDropper) {
+      return;
+    }
+  
+    // @ts-ignore
+    const eyeDropper = new EyeDropper();
+  
+    eyeDropper.open().then(result => {
+      const color = result.sRGBHex;
+      this.changeColor(color);
+    }).catch(e => {});
   }
 
   setColor(value: Hsva) {
