@@ -109,7 +109,7 @@ export class PanelComponent implements OnInit {
   public previewColor: string = "#000000";
   public hsva = new Hsva(0, 1, 1, 1);
 
-  public colorsAnimationEffect = "slide-in";
+  public colorsAnimationEffect = "popup";
 
   public palette = defaultColors;
   public variants = [];
